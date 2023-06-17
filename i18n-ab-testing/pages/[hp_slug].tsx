@@ -34,12 +34,14 @@ export const getStaticProps: GetStaticProps<any, { hp_slug: string }, any> = asy
   params: { hp_slug = 'desktop' } = { hp_slug: 'desktop' },
   locale = 'en-US',
 }) => {
+  console.log('getStaticProps invoked');
+
   // simulating cms api call:
   const content = await new Promise((resolve) => {
     setTimeout(() => {
       resolve(hp_slug === 'desktop'
-        ? 'Enjoy the desktop version'
-        : 'Enjoy the mobile version'
+        ? `Enjoy the desktop version. And this is your number: ${Math.round(Math.random() * 100)}`
+        : `Enjoy the mobile version. And this is your number: ${Math.round(Math.random() * 100)}`
       );
     }, 200);
   });
@@ -54,6 +56,7 @@ export const getStaticProps: GetStaticProps<any, { hp_slug: string }, any> = asy
 };
 
 export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale }) => {
+  console.log('getStaticPaths invoked');
   return {
     paths: [
       {
@@ -73,6 +76,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales, defaultLocale })
         locale: 'zh-CN',
       },
     ],
-    fallback: false,
+    fallback: true,
   };
 };
